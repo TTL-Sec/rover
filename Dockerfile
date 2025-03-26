@@ -2,7 +2,7 @@
 ARG TF_VERSION=light
 
 # Build ui
-FROM node:20-alpine as ui
+FROM node:20-alpine AS ui
 WORKDIR /src
 # Copy specific package files
 COPY ./ui/package-lock.json ./
@@ -25,7 +25,7 @@ COPY . .
 # Copy ui/dist from ui stage as it needs to embedded
 COPY --from=ui ./src/dist ./ui/dist
 # Build rover
-RUN go get -d -v golang.org/x/net/html
+RUN go get -d -v golang.org/x/net/html@v0.33.0
 RUN CGO_ENABLED=0 GOOS=linux go build -o rover .
 
 # Release stage
